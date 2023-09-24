@@ -4,13 +4,13 @@ public class LinkedListDeque<T> {
         private Node prev;
         private Node next;
 
-        public Node(T i, Node p, Node n) {
+        private Node(T i, Node p, Node n) {
             item = i;
             prev = p;
             next = n;
         }
 
-        public Node(Node p, Node n) {
+        private Node(Node p, Node n) {
             prev = p;
             next = n;
         }
@@ -27,25 +27,14 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
-    public LinkedListDeque(LinkedListDeque<T> other) {
-        sentinel = new Node(null, null);
-        sentinel.prev = sentinel;
-        sentinel.next = sentinel;
-        size = 0;
-
-        for (int i = 0; i < other.size(); i++) {
-            addLast(other.get(i));
-        }
-    }
-
     /**
      * adds an item of type T to the front of the deque.
      */
     public void addFirst(T item) {
         size++;
         Node p = new Node(item, sentinel, sentinel.next);
-        sentinel.next = p;
         sentinel.next.prev = p;
+        sentinel.next = p;
     }
 
     /**
