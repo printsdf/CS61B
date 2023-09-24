@@ -140,6 +140,6 @@ public class LinkedListDeque<T> {
         if (index < 0 || index >= size) {
             return null;
         }
-        return getRecursiveHelp(index - 1, sentinel.next);
+        return getRecursiveHelp(index, sentinel.next);
     }
 }
