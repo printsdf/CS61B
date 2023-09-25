@@ -80,10 +80,10 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
+        size--;
         if (size >= 16 && (double) size / items.length < 0.25) {
             resize(size / 2);
         }
-        size--;
         nextFirst = nextFirst == items.length - 1 ? 0 : nextFirst + 1;
         T item = items[nextFirst];
         items[nextFirst] = null;
@@ -98,10 +98,10 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
+        size--;
         if (size >= 16 && (double) size / items.length < 0.25) {
             resize(size / 2);
         }
-        size--;
         nextLast = nextLast == 0 ? items.length - 1 : nextLast - 1;
         T item = items[nextLast];
         items[nextLast] = null;
