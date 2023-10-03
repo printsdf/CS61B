@@ -16,11 +16,12 @@ public class ArrayDeque<T> {
 
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        for (int i = 1; i <= size; i++) {
-            a[i] = items[(++nextFirst) % items.length];
+        for (int i = 0; i < size; i++) {
+            a[i] = items[nextFirst == items.length ? 0 : nextFirst + 1];
+            nextFirst++;
         }
-        nextFirst = 0;
-        nextLast = size + 1;
+        nextFirst = size - 1;
+        nextLast = items.length - 1;
         items = a;
     }
     
