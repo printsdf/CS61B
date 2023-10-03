@@ -119,6 +119,6 @@ public class ArrayDeque<T> {
         if (index < 0 || index >= size) {
             return null;
         }
-        return items[(nextFirst + 1 + index) % items.length];
+        return items[(nextFirst + index + 1) % items.length];
     }
 }
