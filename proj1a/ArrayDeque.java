@@ -20,6 +20,7 @@ public class ArrayDeque<T> {
             a[i] = items[nextFirst == items.length - 1 ? 0 : nextFirst + 1];
             nextFirst++;
         }
+        size = capacity;
         nextFirst = size - 1;
         nextLast = items.length - 1;
         items = a;
