@@ -15,42 +15,39 @@ public class ArrayDeque<T> {
     }
 
     private void resize(int capacity) {
-        T[] a = (T[]) new Object[capacity];
-        for (int i = 1; i <= size; i++) {
-            if (nextFirst == items.length - 1) {
-                nextFirst = 0;
-            }
-            a[i] = items[nextFirst + 1];
-            nextFirst++;
-        }
-        size = capacity;
-        nextFirst = 0;
-        nextLast = items.length - 1;
-        items = a;
+        //TODO
     }
-    
+
+    /**
+     * get the last index.
+     */
+    private int minusOne(int index) {
+        return Math.floorMod(index - 1, items.length);
+    }
+
+    /**
+     * get the next index.
+     */
+    private int plusOne(int index) {
+        return Math.floorMod(index + 1, items.length);
+    }
+
     /**
      * adds an item of type T to the front of the deque.
      */
     public void addFirst(T item) {
-        if (size == items.length) {
-            resize(size * 2);
-        }
         items[nextFirst] = item;
         size++;
-        nextFirst = nextFirst == 0 ? items.length - 1 : nextFirst - 1;
+        minusOne(nextFirst);
     }
 
     /**
      * adds an item of type T to the back of the deque.
      */
     public void addLast(T item) {
-        if (size == items.length) {
-            resize(size * 2);
-        }
         items[nextLast] = item;
         size++;
-        nextLast = nextLast == items.length - 1 ? 0 : nextLast + 1;
+        plusOne(nextLast);
     }
 
     /**
@@ -82,16 +79,12 @@ public class ArrayDeque<T> {
      * If no such item exists, returns null.
      */
     public T removeFirst() {
-        if (size == 0) {
+        if (isEmpty()) {
             return null;
         }
-        size--;
-        if (size >= 16 && (double) size / items.length < 0.25) {
-            resize(size / 2);
-        }
-        nextFirst = nextFirst == items.length - 1 ? 0 : nextFirst + 1;
+        plusOne(nextFirst);
         T item = items[nextFirst];
-        items[nextFirst] = null;
+        size--;
         return item;
     }
 
@@ -100,16 +93,12 @@ public class ArrayDeque<T> {
      * If no such item exists, returns null.
      */
     public T removeLast() {
-        if (size == 0) {
+        if (isEmpty()) {
             return null;
         }
-        size--;
-        if (size >= 16 && (double) size / items.length < 0.25) {
-            resize(size / 2);
-        }
-        nextLast = nextLast == 0 ? items.length - 1 : nextLast - 1;
+        minusOne(nextLast);
         T item = items[nextLast];
-        items[nextLast] = null;
+        size--;
         return item;
     }
 
@@ -119,9 +108,9 @@ public class ArrayDeque<T> {
      * Must not alter the deque!
      */
     public T get(int index) {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index > size) {
             return null;
         }
-        return items[(nextFirst + index + 1) % items.length];
+        return items[Math.floorMod((plusOne(nextFirst) + index), items.length)];
     }
 }
