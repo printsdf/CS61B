@@ -14,8 +14,13 @@ public class ArrayDeque<T> {
         nextLast = 1;
     }
 
-    private void resize(int capacity) {
-        //TODO
+    private void resize() {
+        if (size == items.length) {
+            expand();
+        }
+        if (size < (items.length) * 0.25 && items.length > 8) {
+            reduce();
+        }
     }
 
     /**
@@ -108,9 +113,33 @@ public class ArrayDeque<T> {
      * Must not alter the deque!
      */
     public T get(int index) {
-        if (index < 0 || index > size) {
+        if (index < 0 || index >= size || isEmpty()) {
             return null;
         }
-        return items[Math.floorMod((plusOne(nextFirst) + index), items.length)];
+        index = Math.floorMod(plusOne(nextFirst) + index, items.length);
+        return items[index];
+    }
+
+    private void resizeHelper(int capacity) {
+        T[] a = items;
+        int begin = plusOne(nextFirst);
+        int end = minusOne(nextLast);
+        items = (T[]) new Object[capacity];
+        nextFirst = 0;
+        nextLast = 1;
+        for (int i = begin; i != end; i = plusOne(i)) {
+            items[nextLast] = a[i];
+            nextLast = plusOne(nextLast);
+        }
+        items[nextLast] = a[end];
+        nextLast = plusOne(nextLast);
+    }
+
+    private void reduce() {
+        resizeHelper(items.length / 2);
+    }
+
+    private void expand() {
+        resizeHelper(items.length * 2);
     }
 }
