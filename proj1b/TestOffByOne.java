@@ -15,5 +15,5 @@ public class TestOffByOne {
         boolean actual2 = offByOne.equalChars('a', 'f');
         assertFalse(actual2);
     }
-    //Uncomment this class once you've created your CharacterComparator interface and OffByOne class.
+
 }
