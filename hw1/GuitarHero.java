@@ -27,11 +27,11 @@ public class GuitarHero {
             }
 
             double sample = 0;
-            for (synthesizer.GuitarString string : gs){
+            for (synthesizer.GuitarString string : gs) {
                 sample += string.sample();
             }
             StdAudio.play(sample);
-            for (synthesizer.GuitarString string : gs){
+            for (synthesizer.GuitarString string : gs) {
                 string.tic();
             }
         }
